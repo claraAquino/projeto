@@ -3,30 +3,25 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const {
-  DB_HOST,
-  DB_PORT,
-  DB_NAME,
-  DB_USER,
-  DB_PASS,
-  NODE_ENV
-} = process.env;
-
-export const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
-  host: DB_HOST,
-  port: DB_PORT || 5432,
-  dialect: 'postgres',
-  logging: NODE_ENV === 'development' ? console.log : false,
-  pool: {
-    max: 10,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  },
-  dialectOptions: {
-    searchPath: ['queroquero']
+export const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASS,
+  {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT || 5432,
+    dialect: 'postgres',
+    logging: process.env.NODE_ENV === 'development' ? console.log : false,
+    dialectOptions: {},
+    define: {
+      schema: 'queroquero',
+    },
+    searchPath: 'queroquero',
   }
-});
+);
+
+await sequelize.sync({ alter: true, searchPath: 'queroquero' });
+
 
 export async function testConnection() {
   try {
