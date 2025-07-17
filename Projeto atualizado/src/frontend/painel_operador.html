@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel do Operador</title>
+    <link rel="stylesheet" href="css/painel_operador.css" />
+    <link rel="icon" type="image/icon" href="imagem/favicon.ico" />
+  </head>
+  <body>
+    <button id="menu-toggle" class="menu-toggle">☰</button>
+    <div class="container">
+      
+      <nav class="side-bar" id="side-bar">
+        <div class="logo-container">
+          <img src="imagem/logoLimpo.png" alt="Logo da Empresa" class="logo" />
+        </div>
+        <a href="painel_operador.html">
+          <img src="imagem/icons/home.png" alt="Início" class="icon" /> Página Inicial
+        </a>
+        <a href="perfil.html">
+          <img src="imagem/icons/usuario.png" alt="Perfil" class="icon" /> Meu Perfil
+        </a>
+        <a href="login.html">
+          <img src="imagem/icons/logout.png" alt="Sair" class="icon" /> Sair
+        </a>
+      </nav>
+  
+      <main class="main-content">
+        <header>
+          <h2>Buscar Solução</h2>
+        </header>
+    
+        <div class="search-box">
+         
+          <input type="text" id="busca-input" placeholder="Buscar solução" />
+  
+          <button id="btn-buscar">Buscar</button>
+        </div>
+  
+       
+        <div id="resultados-busca"></div>
+      </main>
+    </div>
+  
+    <script src="js/painel_operador.js"></script>
+  </body>
+</html>

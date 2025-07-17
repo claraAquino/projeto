@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel do Administrador</title>
+  <link rel="stylesheet" href="css/painel_adm.css" />
+  <link rel="icon" type="image/png" sizes="16x16" href="imagem/favicon.ico">
+
+</head>
+<body>
+  <button id="menu-toggle" class="menu-toggle">≡</button>
+
+  <div class="container">
+  <nav class="side-bar">
+  <div class="logo-container">
+    <img src="imagem/logoLimpo.png" alt="Logo da Empresa" class="logo" />
+  </div>
+  <a href="painel_adm.html">
+    <img src="imagem/icons/home.png" alt="Início" class="icon"> Página Inicial
+  </a>
+  <a href="chat.html">
+    <img src="imagem/icons/chat.png" alt="Chat" class="icon"> Chat
+  </a>
+  <a href="biblioteca_adm.html">
+    <img src="imagem/icons/arquivo.png" alt="Base de Conhecimento" class="icon"> Base de Conhecimento
+  </a><a href="assuntos.html">
+    <img src="imagem/icons/cad.png" alt="Relatório" class="icon"> Assuntos Não Cadastrados
+  </a>
+  <a href="relatorio.html">
+    <img src="imagem/icons/relatorio.png" alt="Relatório" class="icon"> Relatório
+  </a>
+  <a href="usuarios.html">
+    <img src="imagem/icons/usuario.png" alt="Usuários" class="icon"> Gestão de Usuários
+  </a>
+  <a href="login.html">
+    <img src="imagem/icons/logout.png" alt="Sair" class="icon"> Sair
+  </a>
+</nav>
+    <main class="main-content">
+      <header class="header">
+        <h1>Painel do Administrador</h1>
+        <p>Visão geral do sistema e acesso rápido às funcionalidades</p>
+      </header>
+
+      <section class="dashboard">
+        <div class="card">
+          <a href="usuarios.html">
+          👤Total de Usuários
+          <strong id="total-usuarios"></strong>
+          </a>
+        </div>
+       
+        <div class="card">
+          <a href="biblioteca_adm.html">
+          📄Documentos na Base
+          <strong id="total-documentos"></strong>
+          </a>
+        </div>
+        <div class="card">
+          <a href="assuntos.html">
+          🤖Assuntos não cadastrados
+          <strong>12</strong>
+        </a>
+        </div>
+        
+
+
+
+  <div class="card">
+    <a href="relatorio.html">
+      📊 Relatórios
+      <strong>Ver Detalhes</strong>
+    </a>
+  </div>
+
+  <div class="card">
+    <a href="biblioteca_adm.html">
+      ➕ Novo Documento
+      <strong>Adicionar</strong>
+    </a>
+  </div>
+
+  <div class="card">
+    <a href="usuarios.html">
+      ➕ Novo Usuário
+      <strong>Cadastrar</strong>
+    </a>
+  </div>
+      </section>
+ 
+    </main>
+  </div>
+  <script src="js/painel_adm.js"></script>
+</body>
+</html>

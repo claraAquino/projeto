@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat-Administrador</title>
+  <link rel="stylesheet" href="css/painel_operador.css" />
+  <link rel="icon" type="image/png" sizes="16x16" href="imagem/favicon.ico">
+</head>
+<body>
+  <button id="menu-toggle" class="menu-toggle">☰</button>
+  <div class="container">
+    <nav class="side-bar">
+      <div class="logo-container">
+        <img src="imagem/logoLimpo.png" alt="Logo da Empresa" class="logo" />
+      </div>
+      <a href="painel_adm.html">
+        <img src="imagem/icons/home.png" alt="Início" class="icon"> Página Inicial
+      </a>
+      <a href="chat.html">
+        <img src="imagem/icons/chat.png" alt="Chat" class="icon"> Chat
+      </a>
+      <a href="biblioteca_adm.html">
+        <img src="imagem/icons/arquivo.png" alt="Base de Conhecimento" class="icon"> Base de Conhecimento
+      </a>
+      <a href="assuntos.html">
+        <img src="imagem/icons/cad.png" alt="Relatório" class="icon"> Assuntos Não Cadastrados
+      </a>
+      <a href="relatorio.html">
+        <img src="imagem/icons/relatorio.png" alt="Relatório" class="icon"> Relatório
+      </a>
+      <a href="usuarios.html">
+        <img src="imagem/icons/usuario.png" alt="Usuários" class="icon"> Gestão de Usuários
+      </a>
+      <a href="login.html">
+        <img src="imagem/icons/logout.png" alt="Sair" class="icon"> Sair
+      </a>
+    </nav>
+    <main class="main-content">
+      <header>
+        <h2>Buscar Solução com IA</h2>
+      </header>
+      <div class="search-box">
+        <input type="text" id="busca-input" placeholder="Digite sua pergunta" />
+        <button id="btn-buscar">Buscar</button>
+      </div>
+      <div id="resultados-busca"></div>
+    </main>
+  </div>
+  <script src="js/painel_operador.js"></script>
+</body>
+</html>

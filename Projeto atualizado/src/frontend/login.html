@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Projeto Bê-à-Bá</title>
+  <link rel="stylesheet" href="css/login.css" />
+  <link rel="icon" type="image/png" sizes="16x16" href="imagem/favicon.ico">
+</head>
+<body>
+  <div class="container">
+    <div class="left-panel"></div>
+    <div class="right-panel">
+      <form id="login-form" class="login-form">
+        <h2>Bem-vindo</h2>
+        <p>Faça login para continuar</p>
+        <input type="email" id="email" placeholder="E-mail" required />
+        <input type="password" id="senha" placeholder="Senha" required />
+        <button type="submit">Entrar</button>
+        <a href="recuperar.html" class="link-senha">Esqueceu sua senha?</a><br />
+        <div id="erro-div" class="mensagem-erro"></div>
+      </form>
+      
+    </div>
+    <!-- Modal de confirmação -->
+<div id="modal-confirmar-sessao" class="modal-overlay" style="display: none;">
+  <div class="modal-content">
+    <p>Já existe uma sessão ativa para este usuário. Deseja encerrar a sessão anterior?</p>
+    <div class="modal-buttons">
+      <button id="btn-confirmar-sim">Sim</button>
+      <button id="btn-confirmar-nao">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+  </div>
+
+  <script src="js/login.js"></script>
+</body>
+</html>
