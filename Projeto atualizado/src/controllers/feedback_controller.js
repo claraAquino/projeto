@@ -1,22 +1,19 @@
 import { Feedback } from '../models/index.js';
+import { dataHoraLocal } from '../utils/data.js';
 
-export async function criarFeedback(req, res) {
+export async function registrarFeedback(req, res) {
   try {
-    const { id_consulta, satisfatorio, comentario } = req.body;
+    const { id_consulta, util } = req.body;
 
-    if (!id_consulta || satisfatorio === undefined) {
-      return res.status(400).json({ mensagem: 'Campos obrigatórios ausentes.' });
-    }
-
-    const novoFeedback = await Feedback.create({
+    const feedback = await Feedback.create({
       id_consulta,
-      satisfatorio,
-      comentario,
+      util,
+      data_feedback: dataHoraLocal()
     });
 
-    res.status(201).json(novoFeedback);
+    return res.status(201).json(feedback);
   } catch (erro) {
-    console.error('Erro ao criar feedback:', erro);
-    res.status(500).json({ erro: 'Erro interno ao salvar feedback.' });
+    console.error("Erro ao registrar feedback:", erro);
+    return res.status(500).json({ mensagem: "Erro ao registrar feedback" });
   }
 }
