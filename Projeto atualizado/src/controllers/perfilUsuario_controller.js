@@ -1,51 +1,81 @@
-import { PerfilUsuario } from '../models/perfilUsuario_model.js';
-import { Usuario } from '../models/usuario_model.js';
-import { Perfil } from '../models/perfil_model.js';
+import { Usuario, Perfil } from '../models/index.js';
 
-// Criar vínculo entre usuário e perfil
-export async function vincularPerfil(req, res) {
+
+// Atribuir perfil a usuário
+export async function atribuirPerfilAoUsuario(req, res) {
+  console.log('➡️ Entrou na função atribuirPerfilAoUsuario'); // 👈 ADICIONE ISSO
   try {
-    const { id_usuario, id_perfil } = req.body;
+    const { id_usuario } = req.params;
+    const { id_perfil } = req.body;
 
-    if (!id_usuario || !id_perfil) {
-      return res.status(400).json({ message: 'id_usuario e id_perfil são obrigatórios.' });
+    // Verificar se o usuário existe
+    const usuario = await Usuario.findByPk(id_usuario);
+    if (!usuario) {
+      return res.status(404).json({ mensagem: 'Usuário não encontrado.' });
     }
 
-    await PerfilUsuario.create({ id_usuario, id_perfil });
-    res.status(201).json({ message: 'Perfil vinculado com sucesso.' });
-  } catch (err) {
-    console.error('Erro ao vincular perfil:', err);
-    res.status(500).json({ message: 'Erro ao vincular perfil.' });
+    // Verificar se o perfil existe
+    const perfil = await Perfil.findByPk(id_perfil);
+    if (!perfil) {
+      return res.status(404).json({ mensagem: 'Perfil não encontrado.' });
+    }
+
+    // Fazer a associação (inserção na tabela perfil_usuario)
+    await usuario.addPerfil(perfil);
+
+    return res.status(200).json({ mensagem: 'Perfil atribuído ao usuário com sucesso.' });
+  } catch (erro) {
+    console.error('Erro ao atribuir perfil:', erro);
+    return res.status(500).json({ mensagem: 'Erro interno ao atribuir perfil.' });
   }
 }
-
-// Listar todos os vínculos
-export async function listarVinculos(req, res) {
-  try {
-    const vinculos = await PerfilUsuario.findAll({ include: [Usuario, Perfil] });
-    res.json(vinculos);
-  } catch (err) {
-    console.error('Erro ao listar vínculos:', err);
-    res.status(500).json({ message: 'Erro ao listar vínculos.' });
-  }
-}
-
-// Remover vínculo específico
-export async function desvincularPerfil(req, res) {
+// Remover perfil de usuário
+export async function removerPerfil(req, res) {
   try {
     const { id_usuario, id_perfil } = req.params;
 
-    const deletado = await PerfilUsuario.destroy({
-      where: { id_usuario, id_perfil }
-    });
+    const usuario = await Usuario.findByPk(id_usuario);
+    if (!usuario) return res.status(404).json({ message: 'Usuário não encontrado.' });
 
-    if (!deletado) {
-      return res.status(404).json({ message: 'Vínculo não encontrado.' });
+    const perfil = await Perfil.findByPk(id_perfil);
+    if (!perfil) return res.status(404).json({ message: 'Perfil não encontrado.' });
+
+    const perfis = await usuario.getPerfis();
+    const temPerfil = perfis.some(p => p.id_perfil === perfil.id_perfil);
+    if (!temPerfil) {
+      return res.status(400).json({ message: 'Usuário não possui esse perfil.' });
     }
 
-    res.json({ message: 'Vínculo removido com sucesso.' });
+    await usuario.removePerfil(perfil);
+    return res.status(200).json({ message: 'Perfil removido do usuário com sucesso.' });
   } catch (err) {
-    console.error('Erro ao remover vínculo:', err);
-    res.status(500).json({ message: 'Erro ao remover vínculo.' });
+    console.error('Erro ao remover perfil:', err);
+    return res.status(500).json({ message: 'Erro interno ao remover perfil.' });
+  }
+}
+
+// Trocar perfil do usuário (remove todos os antigos e adiciona um novo)
+export async function trocarPerfilDoUsuario(req, res) {
+  try {
+    const { id_usuario } = req.params;
+    const { id_perfil } = req.body;
+
+    const usuario = await Usuario.findByPk(id_usuario);
+    if (!usuario) {
+      return res.status(404).json({ mensagem: 'Usuário não encontrado.' });
+    }
+
+    const perfil = await Perfil.findByPk(id_perfil);
+    if (!perfil) {
+      return res.status(404).json({ mensagem: 'Perfil não encontrado.' });
+    }
+
+    // Remove todos os perfis atuais e define apenas o novo
+    await usuario.setPerfis([perfil]);
+
+    return res.status(200).json({ mensagem: 'Perfil do usuário atualizado com sucesso.' });
+  } catch (erro) {
+    console.error('Erro ao trocar perfil:', erro);
+    return res.status(500).json({ mensagem: 'Erro interno ao trocar perfil.' });
   }
 }
