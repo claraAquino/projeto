@@ -1,0 +1,315 @@
+/* RESET E FONTES */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* CONTAINER E LAYOUT GERAL */
+.container {
+  display: flex;
+}
+
+/* MENU LATERAL */
+.side-bar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 220px;
+  height: 100vh;
+  background-color: #28a745;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease-in-out;
+}
+.side-bar a {
+  display: flex;
+  align-items: center;
+  width: 90%;
+  padding: 0.75rem 1rem;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  margin: 0.3rem 0;
+  font-weight: bold;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+.side-bar a:hover {
+  background-color: #218838;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  transform: scale(1.02);
+}
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+.logo {
+  max-width: 80%;
+  max-height: 60px;
+  height: auto;
+  object-fit: contain;
+}
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* BOTÃO PARA TOGGLE DO MENU */
+.menu-toggle {
+  position: fixed;
+  top: 3px;
+  left: 3px;
+  background-color: #28a735;
+  border: none;
+  color: white;
+  font-size: 24px;
+  padding: 4px 8px;
+  border-radius: 15px;
+  cursor: pointer;
+  z-index: 1100;
+  display: none;
+  transition: background-color 0.3s ease;
+}
+.menu-toggle:hover {
+  background-color: #218838;
+}
+.tabela-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tabela-container table {
+  width: 100%;
+  min-width: 700px;  /* Ajuste esse valor conforme o conteúdo desejado */
+  border-collapse: collapse;
+}
+thead {
+  background-color: #28a745;
+  color: white;
+}
+th, td {
+  padding: 8px 10px;
+  font-size: 14px;
+  white-space: nowrap; /* Impede quebra de linha */
+  border-bottom: 1px solid #dee2e6;
+}
+tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* RESPONSIVIDADE: MENU LATERAL */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+  .side-bar {
+    transform: translateX(-100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 220px;
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+  }
+  .side-bar.aberto {
+    transform: translateX(0);
+  }
+}
+
+/* CONTEÚDO PRINCIPAL */
+.main-content {
+  flex-grow: 1;
+  margin-left: 220px;
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+}
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    width: 100%;
+  }
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    padding: 10px;
+  }
+  h2 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+}
+
+/* INPUTS E BOTÕES NO CABEÇALHO */
+@media (max-width: 768px) {
+  #filtro-nome, .btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .head {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* TABELA - ROLAGEM HORIZONTAL E ESTILO */
+.tabela-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tabela-container table {
+  width: 100%;
+  min-width: 700px;  /* Se a viewport for menor, a tabela forçará a rolagem horizontal */
+  border-collapse: collapse;
+}
+thead {
+  background-color: #28a745;
+  color: white;
+}
+th, td {
+  padding: 8px 10px;
+  font-size: 14px;
+  white-space: nowrap; /* Impede quebra de linha */
+  border-bottom: 1px solid #dee2e6;
+}
+tbody tr:hover {
+  background-color: #f8f9fa;
+}
+@media (max-width: 768px) {
+  th, td {
+    padding: 6px 8px;
+    font-size: 13px;
+  }
+}
+
+/* BOTÕES DE AÇÃO (DENTRO DA TABELA) */
+@media (max-width: 768px) {
+  .btn-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .btn-sm {
+    font-size: 14px;
+    padding: 8px;
+    width: 100%;
+  }
+}
+
+/* MODAL RESPONSIVO */
+@media (max-width: 768px) {
+  .modal-dialog {
+    max-width: 90%;
+  }
+  .modal-body input,
+  .modal-body select {
+    width: 100%;
+  }
+}
+
+/* AJUSTES PARA TELAS MUITO PEQUENAS */
+@media (max-width: 378px) {
+  h2 {
+    padding: 20px;
+  }
+  #filtro-nome {
+    width: 100%;
+    font-size: 16px;
+    padding: 10px;
+  }
+  .menu-toggle {
+    display: block;
+  }
+  .side-bar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  .side-bar.aberto {
+    transform: translateX(0);
+  }
+  .main-content {
+    margin-left: 0;
+    padding: 1rem;
+  }
+  .table th, .table td {
+    font-size: 12px;
+    padding: 6px;
+  }
+   .main-content, .tabela-container {
+    padding-left:20px;
+    overflow-x: auto;
+    white-space: nowrap;
+    width: 100%;
+  }
+.tabela-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tabela-container table {
+  width: 100%;
+  min-width: 600px; /* Ajuste conforme o conteúdo */
+  border-collapse: collapse;
+}
+}
+.tabela-custom {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.linha-cabecalho, .linha-dado {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.linha-cabecalho {
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
+}
+
+.linha-dado:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.linha-dado div {
+  padding: 6px 8px;
+}
+
+.btn-acao {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.btn-editar {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.btn-excluir {
+  background-color: #dc3545;
+  color: white;
+}

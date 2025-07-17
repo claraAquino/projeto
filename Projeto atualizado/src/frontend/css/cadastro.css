@@ -1,0 +1,165 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body, html {
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.left-panel {
+  flex: 1;
+  background-color: #28a745;
+  background-image: url('../imagem/logo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 580px;
+}
+
+.right-panel {
+  flex: 1;
+  background: #f8f9fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cadastro-form {
+  width: 80%;
+  max-width: 400px;
+  background: white;
+  padding: 35px;
+  border-radius: 12px;
+  box-shadow: 0px 0px 15px #00000025;
+  text-align: center;
+}
+
+.cadastro-form h2 {
+  margin-bottom: 12px;
+  color: #212529;
+}
+
+.cadastro-form p {
+  margin-bottom: 22px;
+  color: #495057;
+}
+
+.cadastro-form input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 1em;
+}
+
+.cadastro-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #28a745;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.cadastro-form button:hover {
+  background-color: #28a745;
+}
+
+.mensagem-erro {
+  color: #dc3545;
+  margin-top: 12px;
+  font-weight: bold;
+  display: none;
+}
+
+.link-login {
+  display: block;
+  margin-top: 10px;
+  color: #28a745;
+  text-decoration: none;
+  font-size: 0.9em;
+  transition: color 0.3s ease;
+}
+
+.link-login:hover {
+  color: #1e7e34;
+  text-decoration: underline;
+}
+
+.cadastro-form select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 1em;
+  background-color: white;
+  color: #373b3f;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg%20viewBox%3D'0%200%2010%206'%20xmlns%3D'http%3A//www.w3.org/2000/svg'%3E%3Cpath%20d%3D'M0%200l5%206%205-6z'%20fill%3D'%23212529'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 10px 6px;
+}
+
+.cadastro-form select:focus {
+  outline: none;
+  border-color: #20c997;
+  box-shadow: 0 0 0 2px #20c99733;
+}
+.menu-toggle {
+  position: fixed;
+  top: 3px;
+  left: 3px;
+  background-color: #28a735;
+  border: none;
+  color: white;
+  font-size: 24px;
+  padding: 4px 8px;
+  border-radius: 15px;
+  cursor: pointer;
+  z-index: 1100;
+  display: none; 
+  transition: background-color 0.3s ease;
+}
+
+.menu-toggle:hover {
+  background-color: #218838;
+}
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .left-panel {
+    display: none;
+  }
+
+  .right-panel {
+    flex: none;
+    height: 100%;
+  }
+
+  .cadastro-form{
+    width: 90%;
+    max-width: 100%;
+    padding: 25px;
+    box-shadow: none;
+    border-radius: 0;
+  }
+}

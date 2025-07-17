@@ -1,0 +1,131 @@
+/* Reset & fontes */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Página e container principal */
+body, html {
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Painel da esquerda */
+.left-panel {
+  flex: 1;
+  background-color: #28a745;
+  background-image: url('../imagem/logo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 500px;
+}
+
+/* Painel da direita */
+.right-panel {
+  flex: 1;
+  background: #f8f9fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Formulário */
+.login-form {
+  width: 100%;
+  max-width: 400px;
+  background: white;
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px #00000020;
+  text-align: center;
+}
+
+.login-form h2 {
+  margin-bottom: 10px;
+  color: #343a40;
+}
+
+.login-form p {
+  margin-bottom: 20px;
+  color: #6c757d;
+  font-size: 0.95rem;
+}
+
+/* Campos de input */
+.login-form input {
+  width: 100%;
+  padding: 12px 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.login-form input:focus {
+  border-color: #28a745;
+  outline: none;
+}
+
+/* Botões */
+.login-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #28a745;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-form button:hover {
+  background-color: #218838;
+}
+
+/* Link de voltar ao login */
+.link-senha {
+  display: inline-block;
+  margin-top: 15px;
+  color: #28a745;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.link-senha:hover {
+  text-decoration: underline;
+}
+
+/* Mensagem de erro ou sucesso */
+.mensagem-erro {
+  color: #dc3545; /* vermelho para erros */
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.mensagem-sucesso {
+  color: #28a745; /* verde para sucesso */
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+/* Container da nova senha (inicialmente oculto) */
+#senha-container {
+  margin-top: 20px;
+  animation: fadeIn 0.4s ease;
+}
+
+/* Suaviza a entrada do container */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

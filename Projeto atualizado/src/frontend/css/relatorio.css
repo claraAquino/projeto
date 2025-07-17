@@ -1,0 +1,241 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.container {
+  display: flex;
+}
+.side-bar a {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; 
+  width: 90%;
+  padding: 0.75rem 1rem;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  margin: 0.3rem 0;
+  font-weight: bold;
+  gap: 10px; 
+  transition: all 0.3s ease;
+}
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+.logo {
+  max-width: 80%;
+  max-height: 60px;
+  height: auto;
+  object-fit: contain;
+}
+.side-bar a:hover {
+  background-color: #218838;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  transform: scale(1.02);
+}
+.icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0; 
+}
+.table-container {
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  min-width: 600px;
+}
+.side-bar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 220px;
+  height: 100vh;
+  background-color: #28a745;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease-in-out;
+}
+.side-bar.aberto {
+  transform: translateX(0);
+}
+.main-content {
+  flex-grow: 1;
+  margin-left: 220px;
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+}
+.menu-toggle {
+  position: fixed;
+  top: 3px;
+  left: 3px;
+  background-color: #28a735;
+  border: none;
+  color: white;
+  font-size: 24px;
+  padding: 4px 8px;
+  border-radius: 15px;
+  cursor: pointer;
+  z-index: 1100;
+  display: none;
+  transition: background-color 0.3s ease;
+}
+.menu-toggle:hover {
+  background-color: #218838;
+}
+h1, h2 {
+  margin-bottom: 15px;
+  color: #218838;
+}
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #218838;
+}
+select {
+  padding: 8px 12px;
+  font-size: 1rem;
+  border: 2px solid #94d2bd;
+  border-radius: 5px;
+  margin-bottom: 25px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+select:hover {
+  border-color: #90e990;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 35px;
+}
+thead {
+  background-color: #2c9236;
+  color: white;
+}
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+tbody tr:hover {
+  background-color: #bcc2bc;
+  transition: background-color 0.3s ease;
+}
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+
+.menu-toggle {
+  position: fixed;
+  top: 3px;
+  left: 3px;
+  background-color: #28a735;
+  border: none;
+  color: white;
+  font-size: 24px;
+  padding: 4px 8px;
+  border-radius: 15px;
+  cursor: pointer;
+  z-index: 1100;
+  display: none; 
+  transition: background-color 0.3s ease;
+}
+h2{
+    font-size:17px;
+    padding:12px;
+  }
+  .h2{
+    margin-left:250px;
+  }
+.menu-toggle:hover {
+  background-color: #218838;
+}
+#graficoTemas{
+margin: 0 auto 90px auto;
+display: block;
+max-width: 900px;
+width:90%;
+margin-left:250px;
+}
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+  .side-bar {
+    transform: translateX(-100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 220px;
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+  }
+  .side-bar.aberto {
+    transform: translateX(0);
+  }
+}
+@media (max-width: 768px) {
+  h1{
+    font-size:21px ;
+    padding:12px;
+  }
+  h2{
+    font-size:17px;
+    padding:12px;
+  }
+  .menu-toggle {
+    display: block;
+  }
+
+  .side-bar {
+    transform: translateX(-100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 220px;
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .side-bar.aberto {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+  #graficoTemas {
+  width: 98%;
+  margin-bottom: 20px;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  margin-left:5px;
+  display:block;
+
+}
+.h2{
+  margin-left:5px;
+}
+  
+}
