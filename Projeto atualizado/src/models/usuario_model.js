@@ -21,7 +21,10 @@ export const Usuario = sequelize.define('Usuario', {
   senha_hash: {
     type: DataTypes.STRING(255),
     allowNull: false
-  },
+  },status: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+   },
   data_cadastro:{
     type: DataTypes.DATE,
     defaultValue:DataTypes.NOW
