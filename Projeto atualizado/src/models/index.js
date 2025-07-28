@@ -25,7 +25,7 @@ export const Usuario = sequelize.define('Usuario', {
   status:        { type: DataTypes.BOOLEAN,    defaultValue: false, field: 'status' }
 }, {
   tableName: 'usuario',
-  schema:    'queroquero',
+  schema:    'schema',
   timestamps: false
 });
 
@@ -36,7 +36,7 @@ export const Perfil = sequelize.define('Perfil', {
   tipo:      { type: DataTypes.TEXT, field: 'tipo' }
 }, {
   tableName: 'perfil',
-  schema:    'queroquero',
+  schema:    'schema',
   timestamps: false
 });
 
@@ -46,7 +46,7 @@ export const PerfilUsuario = sequelize.define('PerfilUsuario', {
   id_perfil:  { type: DataTypes.INTEGER, primaryKey: true, field: 'id_perfil' }
 }, {
   tableName: 'perfil_usuario',
-  schema:    'queroquero',
+  schema:    'schema',
   timestamps: false
 });
 
@@ -57,7 +57,7 @@ export const Categoria = sequelize.define('Categoria', {
   descricao:    { type: DataTypes.TEXT, field: 'descricao' }
 }, {
   tableName: 'categoria',
-  schema:    'queroquero',
+  schema:    'schema',
   timestamps: false
 });
 
@@ -70,7 +70,7 @@ export const Subcategoria = sequelize.define('Subcategoria', {
   id_categoria:    { type: DataTypes.INTEGER, allowNull: false, field: 'id_categoria' }
 }, {
   tableName: 'subcategoria',
-  schema:    'queroquero',
+  schema:    'schema',
   timestamps: false
 });
 
@@ -86,8 +86,9 @@ export const Documento = sequelize.define('Documento', {
   obsoleto:        { type: DataTypes.BOOLEAN, field: 'obsoleto' }
 }, {
   tableName: 'documento',
-  schema:    'queroquero',
-  timestamps: false
+  schema:    'schema',
+  timestamps: false,
+  onDelete: 'CASCADE'
 });
 
 // Sessão
@@ -100,7 +101,7 @@ export const Sessao = sequelize.define('Sessao', {
   token:           { type: DataTypes.TEXT, field: 'token' }
 }, {
   tableName: 'sessao',
-  schema:    'queroquero',
+  schema:    'schema',
   timestamps: false
 });
 
@@ -112,7 +113,7 @@ export const Consulta = sequelize.define('Consulta', {
   data_consulta:{ type: DataTypes.DATE, defaultValue: DataTypes.NOW, field: 'data_consulta' }
 }, {
   tableName: 'consulta',
-  schema:    'queroquero',
+  schema:    'schema',
   timestamps: false
 });
 
@@ -122,39 +123,48 @@ export const Sugestao = sequelize.define('Sugestao', {
   id_consulta: { type: DataTypes.INTEGER, allowNull: false, unique: true, field: 'id_consulta' },
   solucao:     { type: DataTypes.TEXT, allowNull: false, field: 'solucao' },
   id_documento:{ type: DataTypes.INTEGER, field: 'id_documento' },
-  data_sugestao:{ type: DataTypes.DATE, defaultValue: DataTypes.NOW, field: 'data_sugestao' }
+  data_sugestao:{ type: DataTypes.DATE, defaultValue: DataTypes.NOW, field: 'data_sugestao' },
+  avaliacoes_positivas: { type: DataTypes.INTEGER, defaultValue: 0, field: 'avaliacoes_positivas' },
+  avaliacoes_negativas: { type: DataTypes.INTEGER, defaultValue: 0, field: 'avaliacoes_negativas' },
 }, {
   tableName: 'sugestao',
-  schema:    'queroquero',
+  schema:    'schema',
   timestamps: false
 });
 
 // Feedback
 export const Feedback = sequelize.define('Feedback', {
   id_feedback:  { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, field: 'id_feedback' },
-  id_consulta:  { type: DataTypes.INTEGER, allowNull: false, unique: true, field: 'id_consulta' },
+  id_sugestao:  { 
+    type: DataTypes.INTEGER, 
+    allowNull: false,
+    field: 'id_sugestao',
+    unique: true,  // Se quiser permitir só um feedback por sugestão, ok
+    references: { model: Sugestao, key: 'id_sugestao' }
+  },
   util:         { type: DataTypes.BOOLEAN, allowNull: false, field: 'util' },
   data_feedback:{ type: DataTypes.DATE, defaultValue: DataTypes.NOW, field: 'data_feedback' }
 }, {
   tableName: 'feedback',
-  schema:    'queroquero',
+  schema:    'schema',
   timestamps: false
 });
+
 
 // SoluçãoNãoEncontrada
 export const SolucaoNaoEncontrada = sequelize.define('SolucaoNaoEncontrada', {
-  id_solucaonaoencontrada:{ type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, field: 'id_solucaonaoencontrada' },
-  data_criacao:           { type: DataTypes.DATE, defaultValue: DataTypes.NOW, field: 'data_criacao' },
-  id_consulta:            { type: DataTypes.INTEGER, allowNull: false, field: 'id_consulta' },
-  input:                  { type: DataTypes.TEXT, allowNull: false, field: 'input' },
-  status:                 { type: DataTypes.STRING(20), allowNull: false, field: 'status' }
+  id_solucaonaoencontrada: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, field: 'id_solucaonaoencontrada' },
+  data_criacao:            { type: DataTypes.DATE, defaultValue: DataTypes.NOW, field: 'data_criacao' },
+  id_consulta:             { type: DataTypes.INTEGER, allowNull: false, field: 'id_consulta' },
+  input:                   { type: DataTypes.TEXT, allowNull: false, field: 'input' },
+  statusdoc:               { type: DataTypes.STRING(20), allowNull: false, field: 'statusdoc' }
 }, {
   tableName: 'solucaonaoencontrada',
-  schema:    'queroquero',
+  schema: 'schema',
   timestamps: false
 });
 
-<<<<<<< HEAD
+
 //Codigo Recuperação
 export const CodigoRecuperacao = sequelize.define('CodigoRecuperacao', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, field: 'id'},
@@ -164,7 +174,7 @@ export const CodigoRecuperacao = sequelize.define('CodigoRecuperacao', {
   usado: { type: DataTypes.BOOLEAN, defaultValue: false, field: 'usado'}
 }, {
   tableName: 'codigo_recuperacao',
-  schema: 'queroquero',
+  schema: 'schema',
   timestamps: true,
   createdAt: 'created_at',
   updatedAt: false
@@ -196,13 +206,22 @@ export const DocumentoParagrafoEmbedding = sequelize.define('DocumentoParagrafoE
   }
 }, {
   tableName: 'documento_paragrafo_embedding',
-  schema: 'queroquero',
+  schema: 'schema',
+  timestamps: false
+});
+//CACHE_REPOSTA
+export const CacheResposta = sequelize.define('CacheResposta', {
+  id_cache:     { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, field: 'id_cache' },
+  input:        { type: DataTypes.TEXT, allowNull: false, field: 'input' },
+  resposta:     { type: DataTypes.TEXT, allowNull: false, field: 'resposta' },
+  score:        { type: DataTypes.FLOAT, field: 'score' },
+  id_sugestao:  { type: DataTypes.INTEGER, field: 'id_sugestao' }
+}, {
+  tableName: 'cache_resposta',
+  schema: 'schema',
   timestamps: false
 });
 
-
-=======
->>>>>>> 8a47cde (front e back)
 // ─── Associação entre modelos ────────────────────────────────────────────────
 Usuario.belongsToMany(Perfil, {
   through:    PerfilUsuario,
@@ -219,7 +238,6 @@ Perfil.belongsToMany(Usuario, {
   timestamps: false
 });
 
-<<<<<<< HEAD
 Usuario.hasMany(CodigoRecuperacao, { foreignKey: 'id_usuario' });
 CodigoRecuperacao.belongsTo(Usuario, { foreignKey: 'id_usuario' });
 
@@ -231,13 +249,6 @@ Documento.belongsTo(Subcategoria, { foreignKey: 'id_subcategoria', as: 'subcateg
 
 Documento.hasMany(DocumentoParagrafoEmbedding, {foreignKey: 'id_documento', as: 'paragrafos'});
 DocumentoParagrafoEmbedding.belongsTo(Documento, {foreignKey: 'id_documento', as: 'documento'});
-=======
-Categoria.hasMany(Subcategoria,     { foreignKey: 'id_categoria' });
-Subcategoria.belongsTo(Categoria,   { foreignKey: 'id_categoria' });
-
-Subcategoria.hasMany(Documento,     { foreignKey: 'id_subcategoria' });
-Documento.belongsTo(Subcategoria,  { foreignKey: 'id_subcategoria' });
->>>>>>> 8a47cde (front e back)
 
 Usuario.hasMany(Sessao,            { foreignKey: 'id_usuario' });
 Sessao.belongsTo(Usuario,          { foreignKey: 'id_usuario' });
@@ -248,14 +259,18 @@ Consulta.belongsTo(Sessao,         { foreignKey: 'id_sessao' });
 Consulta.hasOne(Sugestao,          { foreignKey: 'id_consulta' });
 Sugestao.belongsTo(Consulta,       { foreignKey: 'id_consulta' });
 
-Consulta.hasOne(Feedback,          { foreignKey: 'id_consulta' });
-Feedback.belongsTo(Consulta,       { foreignKey: 'id_consulta' });
+Sugestao.hasOne(Feedback,          { foreignKey: 'id_sugestao' });
+Feedback.belongsTo(Sugestao,       { foreignKey: 'id_sugestao' });
 
 Consulta.hasMany(SolucaoNaoEncontrada, { foreignKey: 'id_consulta' });
 SolucaoNaoEncontrada.belongsTo(Consulta, { foreignKey: 'id_consulta' });
 
+Sugestao.hasMany(CacheResposta, { foreignKey: 'id_sugestao' });
+CacheResposta.belongsTo(Sugestao, { foreignKey: 'id_sugestao' });
+
+
 // ─── Sincronização ────────────────────────────────────────────────────────────
 export async function syncAll() {
-  await sequelize.sync({ alter: true, searchPath: 'queroquero' });
+  await sequelize.sync({ alter: true, searchPath: 'schema' });
   console.log('📦 Todos os modelos sincronizados.');
 }
