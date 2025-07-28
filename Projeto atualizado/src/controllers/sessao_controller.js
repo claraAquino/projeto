@@ -1,9 +1,5 @@
 import { Sessao } from '../models/index.js';
-
 import { dataHoraLocal } from '../utils/data.js'; 
-
-import { dataHoraLocal } from '../utils/data.js'; // função que retorna Date com fuso horário Brasil
-
 
 export async function iniciarSessao(req, res) {
   try {
@@ -11,7 +7,7 @@ export async function iniciarSessao(req, res) {
 
     const agora = dataHoraLocal();
 
-    // Encerra sessões ativas anteriores
+    
     await Sessao.update(
       { data_hora_logout: agora },
       {
@@ -21,7 +17,7 @@ export async function iniciarSessao(req, res) {
         }
       }
     );
-    const agora = dataHoraLocal();
+
 
 
     const sessao = await Sessao.create({
@@ -52,8 +48,6 @@ export async function encerrarSessao(req, res) {
     if (!sessao) {
       return res.status(404).json({ mensagem: 'Sessão não encontrada ou já encerrada.' });
     }
-
-    // Atualiza diretamente
     await Sessao.update(
       { data_hora_logout: dataHoraLocal() },
       { where: { id_sessao: sessao.id_sessao } }
