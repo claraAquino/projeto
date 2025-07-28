@@ -44,7 +44,7 @@ const Documento = sequelize.define('Documento', {
   }
 }, {
   tableName: 'documento',
-  schema: 'queroquero',
+  schema: 'schema',
   timestamps: false,
 });
 
