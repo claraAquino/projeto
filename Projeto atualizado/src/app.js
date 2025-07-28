@@ -19,6 +19,9 @@ import utilsRoutes from './routes/utils_router.js';
 import atendimentoRoutes from './routes/atendimento_routes.js';
 import embeddingRouter from './routes/embeddings.js';
 import generateRoute from './routes/generate_routes.js';
+import solucaoNaoEncontradaRoutes from './routes/solucaonaoencontrada_routes.js';
+import recuperacaoRoute from './routes/tokenrecuperacao_routes.js';
+
 
 const app = express();
 sequelize.sync();
@@ -42,6 +45,7 @@ app.use(
         connectSrc: ["'self'", "http://localhost:8000"],
         scriptSrc: ["'self'"],
         styleSrc: ["'self'", "'unsafe-inline'"],  
+        imgSrc: ["'self'"],
       },
     },
   })
@@ -78,8 +82,10 @@ app.use('/api/atendimento', atendimentoRoutes);
 
 app.use('/api/generate', generateRoute);
 
-
+app.use('/api/solucoes-nao-encontradas', solucaoNaoEncontradaRoutes);
 app.use('/api/embeddings', embeddingRouter);
+app.use('/consulta', atendimentoRoutes);
+app.use('/', recuperacaoRoute);
 
 
 export default app;
