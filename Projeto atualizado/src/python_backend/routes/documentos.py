@@ -52,6 +52,6 @@ def processar_documento(dados: DocumentoEntrada):
         return {"mensagem": "Documento processado", "paragrafos_inseridos": inseridos}
 
     except Exception as e:
-        # Tente também logar no console e retornar o erro para facilitar o debug
+        
         print(f"Erro no processamento do documento: {e}")
         raise HTTPException(status_code=500, detail=f"Erro interno: {e}")
