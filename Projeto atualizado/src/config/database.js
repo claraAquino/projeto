@@ -14,13 +14,13 @@ export const sequelize = new Sequelize(
     logging: process.env.NODE_ENV === 'development' ? console.log : false,
     dialectOptions: {},
     define: {
-      schema: 'queroquero',
+      schema: 'schema',
     },
-    searchPath: 'queroquero',
+    searchPath: 'schema',
   }
 );
 
-await sequelize.sync({ alter: true, searchPath: 'queroquero' });
+await sequelize.sync({ alter: true, searchPath: 'schema' });
 
 
 export async function testConnection() {
