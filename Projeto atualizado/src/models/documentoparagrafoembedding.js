@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../config/database.js'; 
+import { Documento } from './Documento.js';
 
 export const DocumentoParagrafoEmbedding = sequelize.define('DocumentoParagrafoEmbedding', {
   id: {
@@ -11,7 +12,7 @@ export const DocumentoParagrafoEmbedding = sequelize.define('DocumentoParagrafoE
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: Documento,      // Referência direta ao modelo
+      model: Documento,      
       key: 'id_documento'
     },
     onDelete: 'CASCADE'
@@ -26,6 +27,6 @@ export const DocumentoParagrafoEmbedding = sequelize.define('DocumentoParagrafoE
   }
 }, {
   tableName: 'documento_paragrafo_embedding',
-  schema: 'queroquero',
+  schema: 'schema',
   timestamps: false
 });
