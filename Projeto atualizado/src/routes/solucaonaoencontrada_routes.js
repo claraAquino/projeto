@@ -1,9 +1,8 @@
 import express from 'express';
-import { registrar, aprovar } from '../controllers/solucaonaoencontrada_controller.js';
+import { listarSolucoesNaoEncontradas } from '../controllers/solucaonaoencontrada_controller.js';
 
 const router = express.Router();
 
-router.post('/', registrar);
-router.put('/:id/aprovar', aprovar);
+router.get('/', listarSolucoesNaoEncontradas);
 
 export default router;
