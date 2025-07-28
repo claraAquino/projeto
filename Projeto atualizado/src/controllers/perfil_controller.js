@@ -8,7 +8,6 @@ export async function createPerfil(req, res) {
       return res.status(400).json({ message: 'Nome é obrigatório.' });
     }
 
-    // Verifica se já existe perfil com mesmo nome
     const perfilExistente = await Perfil.findOne({ where: { nome } });
     if (perfilExistente) {
       return res.status(409).json({ message: 'Perfil já existe.' });
@@ -35,11 +34,10 @@ export async function getPerfis(req, res) {
 }
 
 
-// Atualizar perfil
 export async function updatePerfil(req, res) {
   try {
     const { id } = req.params;
-    const { nome, tipo } = req.body;  // pode atualizar nome e tipo
+    const { nome, tipo } = req.body;  
 
     const perfil = await Perfil.findByPk(id);
     if (!perfil) {
@@ -59,7 +57,6 @@ export async function updatePerfil(req, res) {
   }
 }
 
-// Excluir perfil
 export async function deletePerfil(req, res) {
   try {
     const { id } = req.params;
