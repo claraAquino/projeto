@@ -1,8 +1,10 @@
+import os
+
+
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from python_backend.routes import documentos, consultas
-
-
 
 app = FastAPI()
 
