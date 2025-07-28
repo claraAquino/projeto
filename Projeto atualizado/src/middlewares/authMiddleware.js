@@ -9,7 +9,7 @@ export const autenticar = async (req, res, next) => {
   if (!token) return res.status(401).json({ erro: 'Token não fornecido.' });
 
   try {
-    
+    // Decodifica e valida o token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     console.log('✅ Token decodificado:', decoded);
 
@@ -29,7 +29,7 @@ export const autenticar = async (req, res, next) => {
       return res.status(401).json({ erro: 'Sessão expirada, encerrada ou inválida.' });
     }
 
-   
+    // Verifica inatividade
     const agora = Date.now();
     const ultimoAcesso = sessao.ultimo_acesso
       ? new Date(sessao.ultimo_acesso).getTime()
@@ -42,7 +42,7 @@ export const autenticar = async (req, res, next) => {
 
     if (agora - ultimoAcesso > TEMPO_INATIVIDADE) {
       console.warn('⏳ Sessão expirada por inatividade.');
-      
+      // Marca a sessão como finalizada por inatividade
       await Sessao.update(
         { data_hora_logout: new Date() },
         { where: { id_sessao: sessao.id_sessao } }
@@ -57,7 +57,7 @@ export const autenticar = async (req, res, next) => {
     );
     console.log('✅ Último acesso atualizado para agora.');
 
-    
+    // Busca usuário e perfis
     const usuario = await Usuario.findByPk(decoded.id_usuario, {
       include: [{
         model: Perfil,
@@ -76,9 +76,9 @@ export const autenticar = async (req, res, next) => {
       return res.status(403).json({ erro: 'Sua conta está desativada. Acesso negado.' });
     }
 
-    
+    // Anexa ao req para uso nas rotas protegidas
     req.usuario = {
-      id: usuario.id_usuario,
+      id_usuario: usuario.id_usuario,
       nome: usuario.nome,
       perfis: usuario.perfis.map(p => p.id_perfil)
     };
@@ -114,7 +114,7 @@ export async function validarSessao(req, res) {
       return res.status(401).json({ erro: 'Sessão expirada ou encerrada.' });
     }
 
-   
+    // (Opcional) Atualiza o último acesso
     sessao.ultimo_acesso = new Date();
     await sessao.save();
     console.log('✅ Validar sessão - Último acesso atualizado.');
