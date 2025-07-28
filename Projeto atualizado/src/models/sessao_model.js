@@ -1,7 +1,5 @@
-
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../config/database.js';
-
 
 export const Sessao = sequelize.define('Sessao', {
   id_sessao: {
@@ -22,7 +20,7 @@ export const Sessao = sequelize.define('Sessao', {
   },
   data_hora_logout: {
     type: DataTypes.DATE,
-    allowNull: true, // logout pode estar em aberto
+    allowNull: true, 
     field: 'data_hora_logout'
   },
   ultimo_acesso: {
@@ -37,6 +35,6 @@ export const Sessao = sequelize.define('Sessao', {
   }
 }, {
   tableName: 'sessao',
-  schema: 'queroquero',
+  schema: 'schema',
   timestamps: false
 });
