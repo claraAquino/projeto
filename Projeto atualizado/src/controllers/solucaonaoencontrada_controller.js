@@ -1,19 +1,20 @@
-import { Solucaonaoencontrada } from '../models/index.js';import { dataHoraLocal } from '../utils/data.js';
+import { SolucaoNaoEncontrada, Consulta, Categoria, Subcategoria } from '../models/index.js';
 
-export async function registrarSolucaoNaoEncontrada(req, res) {
+export const listarSolucoesNaoEncontradas = async (req, res) => {
   try {
-    const { id_consulta, statusdoc } = req.body;
-
-    const registro = await Solucaonaoencontrada.create({
-      id_consulta,
-      statusdoc,
-      data_criacao: dataHoraLocal()
+   const resultados = await SolucaoNaoEncontrada.findAll({
+      include: [
+        {
+          model: Consulta,
+          attributes: ['input', 'data_consulta']
+        }
+      ],
+      order: [['data_criacao', 'DESC']]
     });
 
-    return res.status(201).json(registro);
-  } catch (erro) {
-    console.error("Erro ao registrar ausência de solução:", erro);
-    return res.status(500).json({ mensagem: "Erro ao registrar ausência de solução" });
+    res.json(resultados);
+  } catch (error) {
+    console.error('[ERRO] Listar soluções não encontradas:', error);
+    res.status(500).json({ erro: 'Erro ao buscar soluções não encontradas' });
   }
-}
-
+};
