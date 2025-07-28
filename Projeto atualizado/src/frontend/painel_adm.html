@@ -14,7 +14,7 @@
   <div class="container">
   <nav class="side-bar">
   <div class="logo-container">
-    <img src="imagem/logoLimpo.png" alt="Logo da Empresa" class="logo" />
+    <img src="imagem/logoLimpo.png" alt="Logo da Empresa" id="img" class="logo" />
   </div>
   <a href="painel_adm.html">
     <img src="imagem/icons/home.png" alt="Início" class="icon"> Página Inicial
@@ -33,9 +33,7 @@
   <a href="usuarios.html">
     <img src="imagem/icons/usuario.png" alt="Usuários" class="icon"> Gestão de Usuários
   </a>
-  <a href="login.html">
-    <img src="imagem/icons/logout.png" alt="Sair" class="icon"> Sair
-  </a>
+  <a href="login.html" id="btn-logout"><img src="imagem/icons/logout.png" alt="Sair" class="icon"> Sair</a>
 </nav>
     <main class="main-content">
       <header class="header">
@@ -91,6 +89,14 @@
  
     </main>
   </div>
+  <div id="modal-sessao-expirada-wrapper" style="display: none;">
+  <div id="modal-sessao-expirada-overlay" class="modal-overlay">
+    <div id="modal-sessao-expirada" class="modal">
+      <p id="modal-sessao-expirada-text">Sua sessão expirou. Faça login novamente para continuar.</p>
+      <button id="btn-sessao-expirada-ok">OK</button>
+    </div>
+  </div>
+</div>
   <script src="js/painel_adm.js"></script>
 </body>
 </html>
