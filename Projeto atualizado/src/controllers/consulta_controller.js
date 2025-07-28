@@ -1,100 +1,68 @@
-
-import { Consulta, Sessao } from '../models/index.js';
+import axios from 'axios';
+import { Consulta, Sugestao } from '../models/index.js'; // importe Sugestao
 
 export async function criarConsulta(req, res) {
   try {
-    const { input } = req.body;
-    const id_sessao = req.user?.id_sessao; // ID da sessão autenticada (extraído do token)
+    const { pergunta, id_sessao, id_subcategoria } = req.body;
 
-    if (!input) return res.status(400).json({ mensagem: "Input é obrigatório." });
-
-    const novaConsulta = await Consulta.create({
-      input,
-      id_sessao,
-      data_consulta: new Date()
-    });
-
-    res.status(201).json(novaConsulta);
-  } catch (err) {
-    res.status(500).json({ erro: "Erro ao criar consulta", detalhes: err.message });
-  }
-}
-
-import { Documento, DocumentoEmbedding, Subcategoria } from '../models/index.js';
-import openai from 'openai';
-import { Sequelize } from 'sequelize';
-
-
-
-export async function responderPergunta(req, res) {
-  try {
-    const { pergunta, id_subcategoria } = req.body;
-
-    if (!pergunta || !id_subcategoria) {
-      return res.status(400).json({ erro: 'Pergunta ou subcategoria não informada.' });
+    if (!pergunta || !id_sessao || !id_subcategoria) {
+      return res.status(400).json({ erro: 'Pergunta, sessão ou subcategoria não informada.' });
     }
 
-    // Gerar embedding da pergunta
-    const perguntaEmbedding = await openai.embeddings.create({
-      model: 'text-embedding-ada-002',
-      input: pergunta,
-    });
+    console.log('[INFO] Criando nova consulta para a pergunta:', pergunta);
 
-    const embPergunta = perguntaEmbedding.data[0].embedding;
-
-    // Buscar documentos e embeddings da subcategoria
-    const docs = await Documento.findAll({
-      where: { id_subcategoria },
-      include: [{ model: DocumentoEmbedding, as: 'embedding' }],
-    });
-
-    let melhorScore = -1;
-    let melhorTexto = '';
-    let melhorUrl = '';
-
-    for (const doc of docs) {
-      const texto = doc.embedding.texto_concatenado;
-      const url = doc.url_arquivo;
-
-      const paragrafos = texto.split('\n').filter(p => p.length > 20);
-
-      for (const par of paragrafos) {
-        const embPar = await openai.embeddings.create({
-          model: 'text-embedding-ada-002',
-          input: par,
-        });
-
-        const embVec = embPar.data[0].embedding;
-
-        const score = cosineSimilarity(embPergunta, embVec);
-
-        if (score > melhorScore) {
-          melhorScore = score;
-          melhorTexto = par;
-          melhorUrl = url;
-        }
-      }
-    }
-
-    if (melhorScore >= 0.85) {
-      return res.json({
-        texto: melhorTexto,
-        url: melhorUrl,
-        similaridade: melhorScore,
+    // === 1. Salva a consulta no banco ===
+    let novaConsulta;
+    try {
+      novaConsulta = await Consulta.create({
+        id_sessao,
+        input: pergunta,
+        data_consulta: new Date()
       });
-    } else {
-      return res.status(200).json({ mensagem: 'Nenhuma resposta suficientemente relevante encontrada.' });
+      console.log('[DB] Consulta salva com sucesso. ID:', novaConsulta.id_consulta);
+    } catch (erroCriacao) {
+      console.error('[ERRO] Falha ao salvar consulta:', erroCriacao);
+      return res.status(500).json({ erro: 'Erro ao salvar a consulta no banco.' });
     }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ erro: 'Erro ao buscar resposta.' });
+
+    // === 2. Chama a API Python para gerar resposta ===
+    let respostaAPI;
+    try {
+      respostaAPI = await axios.post('http://localhost:8000/responder', {
+        pergunta,
+        id_subcategoria: parseInt(id_subcategoria, 10)
+      });
+    } catch (erroResposta) {
+      console.error('[ERRO] Erro ao obter resposta da API Python:', erroResposta.message);
+      return res.status(500).json({ erro: 'Erro ao obter resposta da IA.' });
+    }
+
+        // === 3. Salva a resposta como sugestão no banco ===
+    let novaSugestao;
+    try {
+      const dataSugestao = {
+        id_consulta: novaConsulta.id_consulta,
+        solucao: respostaAPI.data.resposta || "Resposta não fornecida",
+        id_documento: respostaAPI.data.id_documento || null,
+        data_sugestao: new Date()
+      };
+
+      novaSugestao = await Sugestao.create(dataSugestao);
+      console.log('[DB] Sugestão salva com sucesso para consulta:', novaConsulta.id_consulta);
+
+    } catch (erroSugestao) {
+      console.error('[ERRO] Falha ao salvar sugestão:', erroSugestao);
+      // opcional: não interrompe o fluxo, só avisa
+    }
+
+    // === 4. Retorna a resposta para o frontend incluindo id_sugestao ===
+    return res.status(200).json({
+      ...respostaAPI.data,
+      id_sugestao: novaSugestao ? novaSugestao.id_sugestao : null
+    }); 
+
+  } catch (erroGeral) {
+    console.error('[ERRO] Erro geral ao processar consulta:', erroGeral);
+    return res.status(500).json({ erro: 'Erro interno no servidor.' });
   }
 }
-
-function cosineSimilarity(a, b) {
-  const dot = a.reduce((acc, val, i) => acc + val * b[i], 0);
-  const normA = Math.sqrt(a.reduce((acc, val) => acc + val * val, 0));
-  const normB = Math.sqrt(b.reduce((acc, val) => acc + val * val, 0));
-  return dot / (normA * normB);
-}
-
