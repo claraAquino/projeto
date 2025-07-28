@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import bcrypt from 'bcrypt';
 import { Usuario, Perfil, Sessao} from '../models/index.js';
 import jwt from 'jsonwebtoken';
@@ -34,11 +36,7 @@ import jwt from 'jsonwebtoken';
       status: true
     });
 
-<<<<<<< HEAD
     await novoUsuario.addPerfis(perfilEncontrado);
-=======
-    await novoUsuario.addPerfil(perfilEncontrado);
->>>>>>> 8a47cde (front e back)
 
     const usuarioComPerfis = await Usuario.findByPk(novoUsuario.id_usuario, {
       include: [{ model: Perfil, as: 'perfis' }]
@@ -128,10 +126,7 @@ export async function deleteUser(req, res) {
   }
 }
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 8a47cde (front e back)
 //atribuição de perfil ao usuário
 export async function atribuirPerfilAoUsuario(req, res) {
   try {
@@ -183,11 +178,7 @@ export async function loginUser(req, res) {
     }
 
     if (!usuario.status) {
-<<<<<<< HEAD
       return res.status(403).json({ message: 'Usuário suspenso por um administrador.' });
-=======
-      return res.status(403).json({ message: 'Usuário ainda não aprovado por um administrador.' });
->>>>>>> 8a47cde (front e back)
     }
 
     const senhaCorreta = await bcrypt.compare(senha, usuario.senha_hash);
@@ -230,17 +221,17 @@ export async function loginUser(req, res) {
     }
 
     // Gera token JWT
-    const token = jwt.sign(
-      {
-        id_usuario: usuario.id_usuario,
-        email: usuario.email,
-        perfis: usuario.perfis.map(p => p.id_perfil)
-      },
-      process.env.JWT_SECRET
-    );
+const token = jwt.sign(
+  {
+    id_usuario: usuario.id_usuario,
+    email: usuario.email,
+    perfis: usuario.perfis.map(p => p.id_perfil)
+  },
+  process.env.JWT_SECRET,
+  { expiresIn: '1h' } // ou o tempo que desejar
+);
 
     // Cria nova sessão
-<<<<<<< HEAD
     const novaSessao = await Sessao.create({
     id_usuario: usuario.id_usuario,
     data_hora_login: new Date(),
@@ -248,15 +239,6 @@ export async function loginUser(req, res) {
     data_hora_logout: null,
     token
   });
-=======
-    await Sessao.create({
-      id_usuario: usuario.id_usuario,
-      data_hora_login: new Date(),
-      ultimo_acesso: new Date(),
-      data_hora_logout: null,
-      token
-    });
->>>>>>> 8a47cde (front e back)
 
     return res.status(200).json({
       id_usuario: usuario.id_usuario,
@@ -266,12 +248,8 @@ export async function loginUser(req, res) {
         id_perfil: p.id_perfil,
         nome: p.nome
       })),
-<<<<<<< HEAD
       token,
       id_sessao: novaSessao.id_sessao
-=======
-      token
->>>>>>> 8a47cde (front e back)
     });
 
   } catch (err) {
@@ -306,11 +284,10 @@ export async function getUsuarioPorEmail(req, res) {
   // implementação da função
 }
 
-<<<<<<< HEAD
   
 export async function toggleStatusUsuario(req, res) {
   console.log("Tipo do status recebido:", typeof req.body.status);
-console.log("Valor do status recebido:", req.body.status);
+  console.log("Valor do status recebido:", req.body.status);
   try {
     const id_usuario = req.params.id_usuario;
     const { status } = req.body;
@@ -339,6 +316,27 @@ console.log("Valor do status recebido:", req.body.status);
     return res.status(500).json({ message: "Erro interno do servidor." });
   }
 }
-=======
-  
->>>>>>> 8a47cde (front e back)
+
+export async function getUserByToken(req, res) {
+  try {
+    const { id_usuario } = req.usuario;
+
+    const usuario = await Usuario.findByPk(id_usuario, {
+      attributes: ['id_usuario', 'nome', 'email', 'status', 'data_cadastro'],
+      include: [{
+        model: Perfil,
+        as: 'perfis',
+        through: { attributes: [] }
+      }]
+    });
+
+    if (!usuario) {
+      return res.status(404).json({ message: 'Usuário não encontrado.' });
+    }
+
+    return res.status(200).json(usuario);
+  } catch (error) {
+    console.error('Erro ao obter usuário logado:', error);
+    return res.status(500).json({ message: 'Erro interno ao buscar usuário.' });
+  }
+}
