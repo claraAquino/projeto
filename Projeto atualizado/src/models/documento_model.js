@@ -1,8 +1,8 @@
 // src/models/documento.js
 import { DataTypes } from 'sequelize';
-import sequelize from '../config/database.js';
+import { sequelize } from '../config/database.js';
 
-const Documento = sequelize.define('Documento', {
+export const Documento = sequelize.define('Documento', {
   id_documento: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -12,7 +12,6 @@ const Documento = sequelize.define('Documento', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-
   arquivo: {
     type: DataTypes.TEXT,
     allowNull: false,
@@ -22,7 +21,6 @@ const Documento = sequelize.define('Documento', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },  
-
   obsoleto: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
@@ -33,19 +31,14 @@ const Documento = sequelize.define('Documento', {
     defaultValue: DataTypes.NOW, 
     field: 'data_criacao' 
   },
-  tipo:{            
+  tipo:            { 
     type: DataTypes.STRING(50), 
-    field: 'tipo'
-  },
-
-  obsoleto:{
-    type:DataTypes.BOOLEAN, 
-    field:'obsoleto'
-  }
+    field: 'tipo' },
 }, {
   tableName: 'documento',
-  schema: 'schema',
+  schema: 'queroquero',
   timestamps: false,
+  onDelete: 'CASCADE'
 });
 
-export default Documento;
+
