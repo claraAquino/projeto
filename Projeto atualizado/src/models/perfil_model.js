@@ -20,6 +20,6 @@ export const Perfil = sequelize.define('Perfil', {
     }
 }, {
     tableName: 'perfil',
-    schema: 'queroquero',
+    schema: 'schema',
     timestamps: false
 });
