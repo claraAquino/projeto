@@ -1,6 +1,9 @@
 import express from 'express';
-import { criarFeedback } from '../controllers/feedback_controller.js';
+import { registrarFeedback } from '../controllers/feedback_controller.js';
+
 const router = express.Router();
 
-router.post('/:id_consulta', criarFeedback);
+router.post('/', registrarFeedback);
+
+
 export default router;
