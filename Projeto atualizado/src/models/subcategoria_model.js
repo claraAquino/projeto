@@ -2,7 +2,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.js';
 
-const Subcategoria = sequelize.define('Subcategoria', {
+export const Subcategoria = sequelize.define('Subcategoria', {
   id_subcategoria: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -18,8 +18,8 @@ const Subcategoria = sequelize.define('Subcategoria', {
   },
 }, {
   tableName: 'subcategoria',
-  schema: 'queroquero',
+  schema: 'schema',
   timestamps: false,
 });
 
-export default Subcategoria;
+
