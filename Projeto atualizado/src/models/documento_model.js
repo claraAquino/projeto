@@ -36,7 +36,7 @@ export const Documento = sequelize.define('Documento', {
     field: 'tipo' },
 }, {
   tableName: 'documento',
-  schema: 'queroquero',
+  schema: 'schema',
   timestamps: false,
   onDelete: 'CASCADE'
 });
