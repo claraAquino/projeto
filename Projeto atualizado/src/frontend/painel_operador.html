@@ -27,22 +27,35 @@
       </nav>
   
       <main class="main-content">
-        <header>
-          <h2>Buscar Solução</h2>
-        </header>
-    
-        <div class="search-box">
-         
-          <input type="text" id="busca-input" placeholder="Buscar solução" />
-  
-          <button id="btn-buscar">Buscar</button>
-        </div>
-  
-       
-        <div id="resultados-busca"></div>
-      </main>
+      <header>
+        <h2>Buscar Solução com IA</h2>
+      </header>
+      <div class="search-box">
+        <div class="select-box">
+  <label for="categoria-select">Categoria:</label>
+  <select id="categoria-select">
+    <option value="">Selecione uma categoria</option>
+  </select>
+
+  <label for="subcategoria-select">Subcategoria:</label>
+  <select id="subcategoria-select" disabled>
+    <option value="">Selecione uma subcategoria</option>
+  </select>
+</div>
+
+        <input type="text" id="busca-input" placeholder="Digite sua pergunta" />
+        <button id="btn-buscar">Buscar</button>
+      </div>
+      <div id="resultados-busca"></div>
+      <div id="avaliacao-sugestao" style="display: none;" class="avaliacao-box">
+        <p>Essa sugestão foi útil?</p>
+        <button id="btn-avaliar-sim">👍 Sim</button>
+        <button id="btn-avaliar-nao">👎 Não</button>
+      </div>
+      </div>
+    </main>
     </div>
   
-    <script src="js/painel_operador.js"></script>
+    <script src="js/chat.js"></script>
   </body>
 </html>
