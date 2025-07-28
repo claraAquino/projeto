@@ -30,7 +30,7 @@ def processar_documento(dados: DocumentoEntrada):
             embedding = gerar_embedding(p)
 
             cursor.execute("""
-                SELECT COUNT(*) FROM queroquero.documento_paragrafo_embedding
+                SELECT COUNT(*) FROM schema.documento_paragrafo_embedding
                 WHERE id_documento = %s AND texto = %s
             """, (dados.id_documento, p))
 
@@ -39,7 +39,7 @@ def processar_documento(dados: DocumentoEntrada):
 
             if quantidade == 0:
                 cursor.execute("""
-                    INSERT INTO queroquero.documento_paragrafo_embedding (id_documento, texto, embedding)
+                    INSERT INTO schema.documento_paragrafo_embedding (id_documento, texto, embedding)
                     VALUES (%s, %s, %s)
                 """, (dados.id_documento, p, json.dumps(embedding)))
                 inseridos += 1
