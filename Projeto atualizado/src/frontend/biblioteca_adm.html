@@ -43,62 +43,93 @@
 
       <div id="botoes-iniciais">
         <button id="btn-manual">Adicionar Manualmente</button>
-        <button id="btn-upload">Importar Arquivo</button>
       </div>
 
-      <form id="form-doc" onsubmit="salvarDocumento(event)" style="display:none;">
-        <input type="hidden" id="doc-id" />
+      <!-- Modal para formulário -->
+      <div id="modal-form-doc" class="modal" style="display:none;">
+        <div class="modal-content">
+          <span class="modal-close fechar-modal-form">&times;</span>
+          <form id="form-doc">
+            <input type="hidden" id="doc-id" />
 
-        <label for="categoria-input">Categoria:</label>
-        <input type="text" id="categoria-input" placeholder="Digite a categoria" required />
+            <label for="categoria-input">Categoria:</label>
+            <input type="text" id="categoria-input" placeholder="Digite a categoria" required />
 
-        <label for="subcategoria-input">Subcategoria:</label>
-        <input type="text" id="subcategoria-input" placeholder="Digite a subcategoria" required />
+            <label for="subcategoria-input">Subcategoria:</label>
+            <input type="text" id="subcategoria-input" placeholder="Digite a subcategoria" required />
 
-        <label for="titulo">Título:</label>
-        <input id="titulo" placeholder="Título do documento" required />
+            <label for="titulo">Título:</label>
+            <input id="titulo" placeholder="Título do documento" required />
 
-        <label for="tipo">Tipo do arquivo:</label>
-        <select id="tipo" required>
-          <option value="">Selecione o tipo</option>
-          <option value="txt">TXT</option>
-          <option value="pdf">PDF</option>
-          <option value="docx">DOCX</option>
-          <option value="outro">Outro</option>
-        </select>
-      
-      
-        <label for="arquivo-texto">Url do arquivo</label>
-        <textarea id="arquivo-texto" placeholder="Texto extraído do arquivo" required></textarea>
+            <label for="tipo">Tipo do arquivo:</label>
+            <select id="tipo" required>
+              <option value="">Selecione o tipo</option>
+              <option value="pdf">PDF</option>
+              <option value="docx">DOCX</option>
+              <option value="outro">Outro</option>
+            </select>
 
-        <button type="submit" onclick="salvarDocumento()">Salvar</button>
-        <button type="button" onclick="cancelarFormulario()">Cancelar</button>
-      </form>
+            <label for="arquivo-texto">URL de download do arquivo:</label>
+            <textarea id="arquivo-texto" placeholder="URL do arquivo" required></textarea>
 
-      <div id="upload-area" style="display:none;">
-        <input type="file" id="arquivo" accept=".txt,.pdf,.docx" />
-        <button type="button" onclick="cancelarFormulario()">Cancelar</button>
+            <button type="submit" id="btn-salvar">Salvar</button>
+            <button type="button" id="btn-cancelar">Cancelar</button>
+          </form>
+        </div>
       </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Categoria</th>
-            <th>Subcategoria</th>
-            <th>Título</th>
-            <th>Tipo</th>
-            <th>Conteúdo</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody id="tabela-docs">
-          <!-- Preenchido via JS -->
-        </tbody>
-      </table>
+      <!-- Modal para upload -->
+      <div id="modal-upload" class="modal" style="display:none;">
+        <div class="modal-content">
+          <span class="modal-close fechar-modal-upload">&times;</span>
+          <input type="file" id="arquivo" accept=".txt,.pdf,.docx" />
+          <button type="button" class="btn-cancelar-upload">Cancelar</button>
+        </div>
+      </div>
+      <div id="modal-sucesso" class="hidden modal-sucesso">
+  <div class="conteudo">
+    <span id="fechar-modal" style="cursor: pointer; float: right;">OK</span>
+    <p>Documento salvo com sucesso!</p>
+  </div>
+</div>
+
+      <div class="tabela-container">
+        <table class="tabela-custom">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Categoria</th>
+              <th>Subcategoria</th>
+              <th>Título</th>
+              <th>Tipo</th>
+              <th>Conteúdo</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-docs">
+            <!-- Preenchido dinamicamente via JS -->
+          </tbody>
+        </table>
+      </div>
     </main>
   </div>
 
+  <div id="modal-sessao-expirada-wrapper" style="display: none;">
+    <div id="modal-sessao-expirada-overlay" class="modal-overlay">
+      <div id="modal-sessao-expirada" class="modal">
+        <p id="modal-sessao-expirada-text">Sua sessão expirou. Faça login novamente para continuar.</p>
+        <button id="btn-sessao-expirada-ok">OK</button>
+      </div>
+    </div>
+  </div>
+  <div id="modal-mensagem-wrapper" style="display: none;">
+  <div class="modal-overlay">
+    <div class="modal">
+      <p id="modal-mensagem-texto"></p>
+      <button id="modal-mensagem-ok">OK</button>
+    </div>
+  </div>
+</div>
   <script src="js/biblioteca_adm.js"></script>
 </body>
 </html>
