@@ -56,8 +56,8 @@ def responder_pergunta(dados: PerguntaEntrada):
                 e.texto,
                 e.embedding,
                 d.arquivo
-            FROM queroquero.documento_paragrafo_embedding e
-            JOIN queroquero.documento d ON d.id_documento = e.id_documento
+            FROM schema.documento_paragrafo_embedding e
+            JOIN schema.documento d ON d.id_documento = e.id_documento
             WHERE d.id_subcategoria = %s
         """, (id_subcategoria,))
         resultados = cursor.fetchall()
@@ -82,7 +82,7 @@ def responder_pergunta(dados: PerguntaEntrada):
     if melhor_score < SIMILARIDADE_MINIMA:
         try:
             cursor.execute("""
-                INSERT INTO queroquero.solucaonaoencontrada (data_criacao, id_consulta, input, statusdoc)
+                INSERT INTO schema.solucaonaoencontrada (data_criacao, id_consulta, input, statusdoc)
                 VALUES (NOW(), %s, %s, %s)
             """, (dados.id_consulta, pergunta, "pendente"))
 
